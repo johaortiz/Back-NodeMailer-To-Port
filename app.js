@@ -1,4 +1,6 @@
 const express = require("express");
+const { Router } = require("express");
+const cors = require('cors')
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -30,6 +32,14 @@ app.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send(message);
 });
+
+const router = Router();
+router.use(cors())
+app.use(express.json());
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true }))
+
+
 
 app.post("/send", async (req, res) => {
   try {
